@@ -44,7 +44,8 @@ module.exports = function (options) {
     if (_.isObject(options.data)) {
         data = _.cloneDeep(options.data);
     } else if (_.isString(options.data)) {
-        data = JSON.parse(fs.readFileSync(path.join(__dirname, options.data)));
+
+        data = JSON.parse(fs.readFileSync(path.resolve(options.data));
     }
 
     if (file.isNull()) {
