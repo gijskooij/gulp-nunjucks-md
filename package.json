@@ -1,6 +1,6 @@
 {
   "name": "gulp-nunjucks-md",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Render Markdown with Nunjucks templates and data",
   "license": "MIT",
   "repository": {
