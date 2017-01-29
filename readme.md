@@ -1,0 +1,1 @@
+Just updated and added a few things to original [Gulp-nunjucks-render](http://github.com/carlosl/gulp-nunjucks-render) plugin. All credit goes to original authors.

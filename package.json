@@ -1,0 +1,42 @@
+{
+  "name": "gulp-nunjucks-md",
+  "version": "1.0.0",
+  "description": "Render Markdown with Nunjucks templates and data",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mohitsinghs/gulp-nunjucks-md"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "nunjucks",
+    "template",
+    "templating",
+    "markdown",
+    "view",
+    "render",
+    "html",
+    "javascript"
+  ],
+  "dependencies": {
+    "front-matter": "^2.1.1",
+    "gulp-util": "^3.0.7",
+    "lodash": "^4.17.2",
+    "marked": "^0.3.6",
+    "nunjucks": "^3.0.0",
+    "through2": "^2.0.3"
+  },
+  "readmeFilename": "readme.md",
+  "bugs": {
+    "url": "https://github.com/mohitsinghs/gulp-nunjucks-md/issues"
+  },
+  "homepage": "https://github.com/carlosl/gulp-nunjucks-md",
+  "_id": "gulp-nunjucks-md@0.0.1",
+  "devDependencies": {}
+}
