@@ -1,6 +1,6 @@
 {
   "name": "gulp-nunjucks-md",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "description": "Render Markdown with Nunjucks templates and data",
   "license": "MIT",
   "repository": {
@@ -36,7 +36,5 @@
   "bugs": {
     "url": "https://github.com/mohitsinghs/gulp-nunjucks-md/issues"
   },
-  "homepage": "https://github.com/carlosl/gulp-nunjucks-md",
-  "_id": "gulp-nunjucks-md@0.0.1",
-  "devDependencies": {}
+  "homepage": "https://github.com/mohitsinghs/gulp-nunjucks-md"
 }
