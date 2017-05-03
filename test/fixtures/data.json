@@ -1,0 +1,16 @@
+{
+  "site": {
+    "title": "Example Site"
+  },
+  "boxes" : [
+    {
+      "title": "red"
+    },
+    {
+      "title": "green"
+    },
+    {
+      "title": "blue"
+    }
+  ]
+}

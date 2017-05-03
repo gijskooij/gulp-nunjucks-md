@@ -1,6 +1,7 @@
 # gulp-nunjucks-md
+[![Build Status](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md.svg)](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md)
 [![npm](https://badge.fury.io/js/gulp-nunjucks-md.svg)](http://badge.fury.io/js/gulp-nunjucks-md) [![dependencies](https://david-dm.org/mohitsinghs/gulp-nunjucks-md.svg?theme=shields.io)](https://david-dm.org/mohitsinghs/gulp-nunjucks-md) [![license MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/mohitsinghs/mohitsinghs.github.io/blob/source/LICENSE)
-> A plugin inherited from [gulp-nunjucks-render](https://github.com/carlosl/gulp-nunjucks-render). Refer to original plugin to know more about rendering nunjucks templates with gulp.
+> Based on [gulp-nunjucks-render](https://github.com/carlosl/gulp-nunjucks-render). Refer to original plugin to know more about rendering nunjucks templates with gulp.
 
 ## Differences
 So, What are the differences ? Well, It contains all the features of original plugin. The additions are regrading the handling of markdown and front-matter. Useful for doing things like static sites.
@@ -110,7 +111,7 @@ This will render to
 </html>
 ```
 
-> There is no magic. This plugin just appends `block` tags around your markdown or html, removes front-matter and appends it to data, converts markdown and finally renders your nunjucks to html.
+> This plugin just appends `block` tags around your markdown or html, removes front-matter and appends it to data, converts markdown and finally renders your nunjucks to html.
 
 ## API Modifications
 

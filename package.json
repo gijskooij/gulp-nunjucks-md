@@ -10,6 +10,9 @@
   "engines": {
     "node": ">=0.10.0"
   },
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
   "files": [
     "index.js"
   ],
@@ -36,5 +39,9 @@
   "bugs": {
     "url": "https://github.com/mohitsinghs/gulp-nunjucks-md/issues"
   },
-  "homepage": "https://github.com/mohitsinghs/gulp-nunjucks-md"
+  "homepage": "https://github.com/mohitsinghs/gulp-nunjucks-md",
+  "devDependencies": {
+    "mocha": "^3.3.0",
+    "should": "^11.2.1"
+  }
 }
