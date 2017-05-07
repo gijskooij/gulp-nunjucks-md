@@ -44,7 +44,6 @@ module.exports = function (options) {
     if (_.isObject(options.data)) {
         data = _.cloneDeep(options.data);
     } else if (_.isString(options.data)) {
-
         data = JSON.parse(fs.readFileSync(path.resolve(options.data)));
     }
 
@@ -64,14 +63,14 @@ module.exports = function (options) {
 
     var frontmatter = fm(file.contents.toString());
     if(!_.isEmpty(frontmatter.attributes)) {
-        var ext = path.extname(file.path);
 
-        if(ext === '.md' || ext === '.markdown' || ext === '.mdown') {
+        if(isMarkdown(file)) {
             md.setOptions(options.marked);
             frontmatter.body = md(frontmatter.body);
         }
 
         _.merge(data, { page: frontmatter.attributes } );
+
         if(data.page.layout){
           file.contents = new Buffer('\{% extends \"' + data.page.layout + '.njk\" %\}\n\{% block ' +  options.block + ' %\}' + frontmatter.body + '\n\{% endblock %\}');
         } else {
@@ -104,6 +103,10 @@ module.exports = function (options) {
     }
   });
 };
+
+function isMarkdown(file) {
+  return /\.md|\.markdown/.test(path.extname(file.path));
+}
 
 module.exports.setDefaults = function (options) {
   defaults = _.defaultsDeep(options || {}, defaults);

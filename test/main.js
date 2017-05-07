@@ -319,14 +319,38 @@ describe('gulp-nunjucks-md', function(){
     streamAutoescape.end();
   });
 
-  it('should render template with front-matter and data', function(done){
+  it('should render simple template with front-matter and data', function(done){
     var stream = nunjucksRender({
       path: ['test/fixtures/'],
       data: 'test/fixtures/data.json'
     });
 
-    var expected = getExpected('rendered-markdown.html');
+    var expected = getExpected('fm-simple.html');
     var file = getFile('fixtures/frontmatter.njk');
+
+    stream.once('data', function(output){
+      should.exist(output);
+      should.exist(output.contents);
+      output.contents.toString().should.equal(expected);
+      done();
+    });
+    stream.write(file);
+    stream.end();
+
+  });
+
+  it('should render markdown template with front-matter', function(done){
+    var stream = nunjucksRender({
+      path: ['test/fixtures/'],
+      data: {
+        "site": {
+          "title": "Example Site"
+        }
+      }
+    });
+
+    var expected = getExpected('fm-markdown.html');
+    var file = getFile('fixtures/markdown.md');
 
     stream.once('data', function(output){
       should.exist(output);

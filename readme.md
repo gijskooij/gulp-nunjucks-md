@@ -1,10 +1,8 @@
 # gulp-nunjucks-md
 [![Build Status](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md.svg)](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md)
-[![npm](https://badge.fury.io/js/gulp-nunjucks-md.svg)](http://badge.fury.io/js/gulp-nunjucks-md) [![dependencies](https://david-dm.org/mohitsinghs/gulp-nunjucks-md.svg?theme=shields.io)](https://david-dm.org/mohitsinghs/gulp-nunjucks-md) [![license MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/mohitsinghs/mohitsinghs.github.io/blob/source/LICENSE)
-> Based on [gulp-nunjucks-render](https://github.com/carlosl/gulp-nunjucks-render). Refer to original plugin to know more about rendering nunjucks templates with gulp.
-
-## Differences
-So, What are the differences ? Well, It contains all the features of original plugin. The additions are regrading the handling of markdown and front-matter. Useful for doing things like static sites.
+[![npm](https://badge.fury.io/js/gulp-nunjucks-md.svg)](http://badge.fury.io/js/gulp-nunjucks-md) [![dependencies](https://david-dm.org/mohitsinghs/gulp-nunjucks-md/status.svg)](https://david-dm.org/mohitsinghs/gulp-nunjucks-md)
+[![devDependencies](https://david-dm.org/mohitsinghs/gulp-nunjucks-md/dev-status.svg)](https://david-dm.org/mohitsinghs/gulp-nunjucks-md?type=dev) [![license MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/mohitsinghs/mohitsinghs.github.io/blob/source/LICENSE)
+> Render nunjucks templates, with markdown and front-matter. Based on [gulp-nunjucks-render](https://github.com/carlosl/gulp-nunjucks-render)
 
 ## Install
 
@@ -14,113 +12,68 @@ Install with [npm](https://npmjs.com/package/gulp-nunjucks-md)
 npm install --save-dev gulp-nunjucks-md
 ```
 
-## Example
+## Features
+This plugin performs following tasks &ndash;
+* Extracts front-matter data and assigns to a `page` variable.
+* Optionally, If file is markdown, renders markdown.
+* Finally, renders nunjucks to html as usual.
 
-Suppose we have a file named **src/templates/default.njk** for parent template.
-```nunjucks
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <title>{{ site.title }} | {{ page.title }}</title>
-    <meta name="description" content="{{ page.description }}" />
-    <link rel="stylesheet" href="{{ site.url }}/main.css">
-  </head>
-  <body>
-    <main>
-      {% block content %}{% endblock %} <!-- Very Important -->
-    <main>
-  <script async src="{{ site.url }}/main.js"></script>
-  </body>
-</html>
-```
+If you want rendering only then prefer [original plugin](https://github.com/carlosl/gulp-nunjucks-render).
 
-And we have a json file at **src/data.json**
-```json
-{
-  "site": {
-    "title": "Example Site",
-    "url": "http://example.com",
-  },
-    "boxes" : [
-    {
-      "title": "red"
-    },
-    {
-      "title": "green",
-    },
-    {
-      "title": "blue",
-    }
-  ]
-}
-```
+## Configuration
 
-Also we have a markdown page with some nunjucks and front-matter in it **src/index.md**.
-```nunjucks
----
-layout: default
-title: "Page Title"
-description: "Some Awesome Description"
----
+Your page should have a front-matter with a `layout` pointing to name of a layout (without extension) in your template directory. Also your parent layout should have a `content` block where processed content will be inserted. See [wiki](https://github.com/mohitsinghs/gulp-nunjucks-md/wiki) for an example.
 
-{% for box in boxes %}
-<div class="{{ box.title }}">
-</div>
-{% endfor %}
-```
+Markdown will be rendered only if a page with markdown extension is found, but be aware that combining markdown with nunjucks can lead to undesired output.
 
-Now in our **gulpfile.js**.
+## Usage
 
-```javascript
-var gulp = require('gulp');
-var nunjucksMd = require('gulp-nunjucks-md');
+```js
+const gulp = require('gulp');
+const nunjucksMd = require('gulp-nunjucks-md');
 
 gulp.task('default', function () {
-  return gulp.src('src/*.md')
+  return gulp.src('src/*.{html,njk,md}') // your pages
     .pipe(nunjucksMd({
-      path: ['src/templates/'] // String or Array,
-      data: 'src/data.json' // String or Data
+      path: ['src/templates/'], // nunjucks templates
+      data: 'src/data.json' // json data
     }))
     .pipe(gulp.dest('dist'));
 });
 ```
 
-This will render to
+## API
+Plugin accepts options object, which contain these by default:
 
-```html
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <title>Example Site | Page Title</title>
-    <meta name="description" content="Some Awesome Description" />
-    <link rel="stylesheet" href="http://example.com/main.css">
-  </head>
-  <body>
-    <main>
-      <div class="red">
-      </div>
-      <div class="green">
-      </div>
-      <div class="blue">
-      </div>
-    <main>
-  <script async src="http://example.com/main.js"></script>
-  </body>
-</html>
+```js
+var defaults = {
+    path: '.',
+    ext: '.html',
+    data: {},
+    block: 'content',
+    marked: null,
+    inheritExtension: false,
+    envOptions: {
+      watch: false
+    },
+    manageEnv: null,
+    loaders: null
+};
 ```
 
-> This plugin just appends `block` tags around your markdown or html, removes front-matter and appends it to data, converts markdown and finally renders your nunjucks to html.
+* `path` - Relative path to templates
+* `ext` - Extension for compiled templates, pass null or empty string if yo don't want any extension
+* `data` - Data passed to template, either object or path to the json
+* `block` - Name of content block in your parent template
+* `marked` - Custom options for [marked](http://github.com/chjj/marked)
+* `inheritExtension` - If true, uses same extension that is used for template
+* `envOptions` - These are options provided for nunjucks Environment. More info [here](https://mozilla.github.io/nunjucks/api.html#configure).
+* `manageEnv` - Hook for managing environment before compilation. Useful for adding custom filters, globals, etc.
+* `loaders` - If provided, uses that as first parameter to Environment constructor. Otherwise, uses provided `path`. More info [here](https://mozilla.github.io/nunjucks/api.html#environment)
 
-## API Modifications
+For more info about nunjucks functionality, check [https://mozilla.github.io/nunjucks/api.html](https://mozilla.github.io/nunjucks/api.html).
 
-There are two additions and one modification from original.
+## Shout-outs
 
-* `data` - Data passed to template. If you pass a path to `json` file then it's okay. It will parse data from that file.
-* `block` - The block to use for template inheritance. Default is `content`.
-* `marked` - Options for marked if you want to modify it.
-
-## License
-
-MIT © [Carlos G. Limardo](http://limardo.org), [Kristijan Husak](http://kristijanhusak.com) and [Mohit Singh](http://git.io/mohit)
+[Carlos G. Limardo](http://limardo.org) and [Kristijan Husak](http://kristijanhusak.com) for [gulp-nunjucks-render](https://github.com/carlosl/gulp-nunjucks-render) from which this plugin is derived.  
+[Sindre Sorhus](http://sindresorhus.com/) for [gulp-nunjucks](https://www.npmjs.org/package/gulp-nunjucks)
