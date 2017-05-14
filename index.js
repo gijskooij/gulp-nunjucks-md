@@ -1,14 +1,14 @@
 'use strict';
-var fs = require('fs');
-var path = require('path');
-var _ = require('lodash');
-var gutil = require('gulp-util');
-var through = require('through2');
-var nunjucks = require('nunjucks');
-var fm = require('front-matter');
-var md = require('marked');
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
+const gutil = require('gulp-util');
+const through = require('through2');
+const nunjucks = require('nunjucks');
+const fm = require('front-matter');
+const md = require('marked');
 
-var defaults = {
+let defaults = {
     path: '.',
     ext: '.html',
     data: {},
@@ -72,7 +72,7 @@ module.exports = function (options) {
         _.merge(data, { page: frontmatter.attributes } );
 
         if(data.page.layout){
-          file.contents = new Buffer('\{% extends \"' + data.page.layout + '.njk\" %\}\n\{% block ' +  options.block + ' %\}' + frontmatter.body + '\n\{% endblock %\}');
+          file.contents = Buffer.from('\{% extends \"' + data.page.layout + '.njk\" %\}\n\{% block ' +  options.block + ' %\}' + frontmatter.body + '\n\{% endblock %\}');
         } else {
           this.emit('error', new gutil.PluginError('gulp-nunjucks-md', 'Layout not declared in front-matter'));
         }
@@ -88,7 +88,7 @@ module.exports = function (options) {
           _this.emit('error', new gutil.PluginError('gulp-nunjucks-md', err, {fileName: filePath}));
           return cb();
         }
-        file.contents = new Buffer(result);
+        file.contents = Buffer.from(result);
         // Replace extension with mentioned/default extension
         // only if inherit extension flag is not provided(truthy)
         if (!options.inheritExtension) {
