@@ -362,4 +362,54 @@ describe('gulp-nunjucks-md', function(){
     stream.end();
 
   });
+
+
+  it('should use super when useBlock set to false globally', function(done){
+    var stream = nunjucksRender({
+      path: ['test/fixtures/'],
+      data: {
+        "site": {
+          "title": "Example Site"
+        }
+      },
+      useBlock: false
+    });
+
+    var expected = getExpected('fm-noblock.html');
+    var file = getFile('fixtures/noblock.njk');
+
+    stream.once('data', function(output){
+      should.exist(output);
+      should.exist(output.contents);
+      output.contents.toString().should.equal(expected);
+      done();
+    });
+    stream.write(file);
+    stream.end();
+
+  });
+
+  it('should use super when useBlock set to false locally', function(done){
+    var stream = nunjucksRender({
+      path: ['test/fixtures/'],
+      data: {
+        "site": {
+          "title": "Example Site"
+        }
+      }
+    });
+
+    var expected = getExpected('fm-noblock.html');
+    var file = getFile('fixtures/noblock-local.njk');
+
+    stream.once('data', function(output){
+      should.exist(output);
+      should.exist(output.contents);
+      output.contents.toString().should.equal(expected);
+      done();
+    });
+    stream.write(file);
+    stream.end();
+
+  });
 });

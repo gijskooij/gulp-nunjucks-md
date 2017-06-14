@@ -50,6 +50,7 @@ var defaults = {
     path: '.',
     ext: '.html',
     data: {},
+    useBlock: true,
     block: 'content',
     marked: null,
     inheritExtension: false,
@@ -64,6 +65,7 @@ var defaults = {
 * `path` - Relative path to templates
 * `ext` - Extension for compiled templates, pass null or empty string if yo don't want any extension
 * `data` - Data passed to template, either object or path to the json
+* `useBlock` - If true appends a content block. If false only parent template will be extended and no default content block will be wrapped. We can also set it at page level by adding `useBlock : false/true` to frontmatter. Please note that page level configuration will be preferred. See #1
 * `block` - Name of content block in your parent template
 * `marked` - Custom options for [marked](http://github.com/chjj/marked)
 * `inheritExtension` - If true, uses same extension that is used for template

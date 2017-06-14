@@ -1,0 +1,9 @@
+---
+layout: layout-noblock
+title: "Page Title"
+useBlock: false
+description: "Some Awesome Description"
+---
+{% block css %}{{ super() }}<link href="extra.css" />{% endblock %}
+{% block content %}<p>Lorem ipsum dolor sit amet</p>{% endblock %}
+{% block js %}{{ super() }}<script src="extra.js"/>{% endblock %}

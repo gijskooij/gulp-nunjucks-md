@@ -12,6 +12,7 @@ let defaults = {
     path: '.',
     ext: '.html',
     data: {},
+    useBlock: true,
     block: 'content',
     marked: null,
     inheritExtension: false,
@@ -71,8 +72,10 @@ module.exports = function (options) {
 
         _.merge(data, { page: frontmatter.attributes } );
 
-        if(data.page.layout){
-          file.contents = Buffer.from('\{% extends \"' + data.page.layout + '.njk\" %\}\n\{% block ' +  options.block + ' %\}' + frontmatter.body + '\n\{% endblock %\}');
+        if(_.has(data,'page.layout')){
+          if(_.has(data,'page.useBlock') ? data.page.useBlock : options.useBlock)
+            file.contents = Buffer.from('\{% extends \"' + data.page.layout + '.njk\" %\}\n\{% block ' +  options.block + ' %\}' + frontmatter.body + '\n\{% endblock %\}');
+          else file.contents = Buffer.from('\{% extends \"' + data.page.layout + '.njk\" %\}' + frontmatter.body);
         } else {
           this.emit('error', new gutil.PluginError('gulp-nunjucks-md', 'Layout not declared in front-matter'));
         }

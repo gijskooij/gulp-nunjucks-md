@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ site.title }} | {{ page.title }}</title>
+    <meta name="description" content="{{ page.description }}" />
+    {% block css %}<link href="main.css" />
+    {% endblock %}
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+    {% block js %}<script src="main.js" />
+    {% endblock %}
+  </body>
+}
+</html>
