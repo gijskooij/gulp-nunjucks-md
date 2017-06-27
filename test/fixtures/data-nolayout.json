@@ -1,0 +1,21 @@
+{
+  "site": {
+    "title": "Example Site"
+  },
+  "boxes" : [
+    {
+      "title": "red"
+    },
+    {
+      "title": "green"
+    },
+    {
+      "title": "blue"
+    }
+  ],
+  "page": {
+    "layout": "layout",
+    "title": "Page Title",
+    "description": "Some Awesome Description"
+  }
+}
