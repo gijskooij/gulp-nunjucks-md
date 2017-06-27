@@ -383,7 +383,7 @@ describe('gulp-nunjucks-md', function () {
     stream.end()
   })
 
-  it('should use page.layout set is passed data', function (done) {
+  it('should render template page.layout set in passed data', function (done) {
     const stream = nunjucksRender({
       path: ['test/fixtures/'],
       data: 'test/fixtures/data-nolayout.json'
@@ -391,6 +391,25 @@ describe('gulp-nunjucks-md', function () {
 
     const expected = getExpected('fm-simple.html')
     const file = getFile('fixtures/nolayout.njk')
+
+    stream.once('data', function (output) {
+      should.exist(output)
+      should.exist(output.contents)
+      output.contents.toString().should.equal(expected)
+      done()
+    })
+    stream.write(file)
+    stream.end()
+  })
+
+  it('should render markdown when page.layout set in passed data', function (done) {
+    const stream = nunjucksRender({
+      path: ['test/fixtures/'],
+      data: {'site': { 'title': 'Example Site' }, 'page': { 'layout': 'layout', 'title': 'Page Title', 'description': 'Some Awesome Description' }}
+    })
+
+    const expected = getExpected('fm-markdown.html')
+    const file = getFile('fixtures/markdown-nolayout.md')
 
     stream.once('data', function (output) {
       should.exist(output)

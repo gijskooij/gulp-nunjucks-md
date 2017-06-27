@@ -67,9 +67,10 @@ module.exports = function (options) {
 
     if (_haveAttributes) _.merge(data, { page: frontmatter.attributes })
 
-    if (isMarkdown(file) && _haveAttributes) {
+    if (isMarkdown(file)) {
       md.setOptions(options.marked)
-      frontmatter.body = md(frontmatter.body)
+      if (_haveAttributes) frontmatter.body = md(frontmatter.body)
+      else file.contents = Buffer.from(md(file.contents.toString()))
     }
     if (_.has(data, 'page.layout')) {
       const _canUseBlock = _.has(data, 'page.useBlock') ? data.page.useBlock : options.useBlock
