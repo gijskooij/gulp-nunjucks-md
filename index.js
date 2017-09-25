@@ -6,7 +6,7 @@ const gutil = require('gulp-util')
 const through = require('through2')
 const nunjucks = require('nunjucks')
 const fm = require('front-matter')
-const md = require('marked')
+const md = require('markdown-it')()
 
 let defaults = {
   path: '.',
@@ -14,7 +14,6 @@ let defaults = {
   data: {},
   useBlock: true,
   block: 'content',
-  marked: null,
   inheritExtension: false,
   envOptions: {
     watch: false
@@ -68,9 +67,8 @@ module.exports = function (options) {
     if (_haveAttributes) _.merge(data, { page: frontmatter.attributes })
 
     if (isMarkdown(file)) {
-      md.setOptions(options.marked)
-      if (_haveAttributes) frontmatter.body = md(frontmatter.body)
-      else file.contents = Buffer.from(md(file.contents.toString()))
+      if (_haveAttributes) frontmatter.body = md.render(frontmatter.body)
+      else file.contents = Buffer.from(md.render(file.contents.toString()))
     }
     if (_.has(data, 'page.layout')) {
       const _canUseBlock = _.has(data, 'page.useBlock') ? data.page.useBlock : options.useBlock
