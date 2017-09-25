@@ -57,7 +57,6 @@ var defaults = {
   data: {},
   useBlock: true,
   block: 'content',
-  marked: null,
   inheritExtension: false,
   envOptions: {
     watch: false
@@ -72,7 +71,6 @@ var defaults = {
 * `data` - Data passed to template, either object or path to the json
 * `useBlock` - If true appends a content block. If false only parent template will be extended and no default content block will be wrapped. We can also set it at page level by adding `useBlock : false/true` to frontmatter. Please note that page level configuration will be preferred.
 * `block` - Name of content block in your parent template
-* `marked` - Custom options for [marked](http://github.com/chjj/marked)
 * `inheritExtension` - If true, uses same extension that is used for template
 * `envOptions` - These are options provided for nunjucks Environment. More info [here](https://mozilla.github.io/nunjucks/api.html#configure).
 * `manageEnv` - Hook for managing environment before compilation. Useful for adding custom filters, globals, etc.
