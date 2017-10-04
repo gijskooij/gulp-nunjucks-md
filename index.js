@@ -80,26 +80,23 @@ module.exports = function (options) {
       this.emit('error', new gutil.PluginError('gulp-nunjucks-md', 'Layout not declared in front-matter or data'))
     }
 
-    const _this = this
-    const filePath = file.path
-
     try {
-      compile.renderString(file.contents.toString(), data, function (err, result) {
+      compile.renderString(file.contents.toString(), data, (err, result) => {
         if (err) {
-          _this.emit('error', new gutil.PluginError('gulp-nunjucks-md', err, {fileName: filePath}))
+          this.emit('error', new gutil.PluginError('gulp-nunjucks-md', err, {fileName: file.path}))
           return cb()
         }
         file.contents = Buffer.from(result)
         // Replace extension with mentioned/default extension
         // only if inherit extension flag is not provided(truthy)
         if (!options.inheritExtension) {
-          file.path = gutil.replaceExtension(filePath, options.ext)
+          file.path = gutil.replaceExtension(file.path, options.ext)
         }
-        _this.push(file)
+        this.push(file)
         cb()
       })
     } catch (err) {
-      _this.emit('error', new gutil.PluginError('gulp-nunjucks-md', err, {fileName: filePath}))
+      this.emit('error', new gutil.PluginError('gulp-nunjucks-md', err, {fileName: file.path}))
       cb()
     }
   })
