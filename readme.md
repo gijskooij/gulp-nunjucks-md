@@ -1,8 +1,6 @@
 # gulp-nunjucks-md
 [![Build Status](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md.svg)](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md)
 [![npm](https://badge.fury.io/js/gulp-nunjucks-md.svg)](http://badge.fury.io/js/gulp-nunjucks-md)
-[![dependencies](https://david-dm.org/mohitsinghs/gulp-nunjucks-md/status.svg)](https://david-dm.org/mohitsinghs/gulp-nunjucks-md)
-[![devDependencies](https://david-dm.org/mohitsinghs/gulp-nunjucks-md/dev-status.svg)](https://david-dm.org/mohitsinghs/gulp-nunjucks-md?type=dev)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![license MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/mohitsinghs/mohitsinghs.github.io/blob/source/LICENSE)
 > Render nunjucks templates, with markdown and front-matter. Based on [gulp-nunjucks-render](https://github.com/carlosl/gulp-nunjucks-render)
@@ -57,6 +55,7 @@ var defaults = {
   data: {},
   useBlock: true,
   block: 'content',
+  marked: null,
   inheritExtension: false,
   envOptions: {
     watch: false
@@ -71,6 +70,7 @@ var defaults = {
 * `data` - Data passed to template, either object or path to the json
 * `useBlock` - If true appends a content block. If false only parent template will be extended and no default content block will be wrapped. We can also set it at page level by adding `useBlock : false/true` to frontmatter. Please note that page level configuration will be preferred.
 * `block` - Name of content block in your parent template
+* `marked` - Custom options for [marked](http://github.com/chjj/marked)
 * `inheritExtension` - If true, uses same extension that is used for template
 * `envOptions` - These are options provided for nunjucks Environment. More info [here](https://mozilla.github.io/nunjucks/api.html#configure).
 * `manageEnv` - Hook for managing environment before compilation. Useful for adding custom filters, globals, etc.
