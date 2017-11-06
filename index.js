@@ -6,7 +6,7 @@ const gutil = require('gulp-util')
 const through = require('through2')
 const nunjucks = require('nunjucks')
 const fm = require('front-matter')
-const md = require('marked')
+const md = require('njk-marked')
 
 let defaults = {
   path: '.',
