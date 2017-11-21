@@ -31,7 +31,7 @@
     "front-matter": "^2.2.0",
     "gulp-util": "^3.0.7",
     "lodash": "^4.17.2",
-    "njk-marked": "^0.3.7",
+    "marked": "^0.3.6",
     "nunjucks": "^3.0.0",
     "through2": "^2.0.3"
   },

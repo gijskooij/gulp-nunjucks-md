@@ -5,8 +5,8 @@ const _ = require('lodash')
 const gutil = require('gulp-util')
 const through = require('through2')
 const nunjucks = require('nunjucks')
-const fm = require('front-matter')
-const md = require('njk-marked')
+const frontMatter = require('front-matter')
+const marked = require('marked')
 
 let defaults = {
   path: '.',
@@ -15,6 +15,7 @@ let defaults = {
   useBlock: true,
   block: 'content',
   marked: null,
+  escape: false,
   inheritExtension: false,
   envOptions: {
     watch: false
@@ -62,28 +63,26 @@ module.exports = function (options) {
       return cb()
     }
 
-    const frontmatter = fm(file.contents.toString())
-    const _haveAttributes = !_.isEmpty(frontmatter.attributes)
+    const isMarkdown = /\.md|\.markdown/.test(path.extname(file.path))
+    const frontmatter = frontMatter(file.contents.toString())
+    const haveAttributes = !_.isEmpty(frontmatter.attributes)
+    let _fileContent = haveAttributes ? frontmatter.body : file.contents.toString()
+    // merge front-matter data
+    if (haveAttributes) _.merge(data, { page: frontmatter.attributes })
+    // process markdown
+    if (isMarkdown) _fileContent = md(_fileContent, options)
 
-    if (_haveAttributes) _.merge(data, { page: frontmatter.attributes })
-
-    if (isMarkdown(file)) {
-      md.setOptions(options.marked)
-      if (_haveAttributes) frontmatter.body = md(frontmatter.body)
-      else file.contents = Buffer.from(md(file.contents.toString()))
-    }
     if (_.has(data, 'page.layout')) {
       const _canUseBlock = _.has(data, 'page.useBlock') ? data.page.useBlock : options.useBlock
-      const _extendLayout = '{% extends "' + data.page.layout + '.njk" %}'
-      const _content = _haveAttributes ? frontmatter.body : file.contents.toString()
-      const _extendBlock = '{% block ' + options.block + ' %}' + _content + '{% endblock %}'
-      file.contents = Buffer.from(_extendLayout.concat(_canUseBlock ? _extendBlock : _content))
-    } else if (_haveAttributes) {
+      const _extendLayout = `{% extends "${data.page.layout}.njk" %}`
+      const _extendBlock = `{% block ${options.block} %}${_fileContent}{% endblock %}`
+      _fileContent = `${_extendLayout} ${_canUseBlock ? _extendBlock : _fileContent}`
+    } else if (haveAttributes) {
       this.emit('error', new gutil.PluginError('gulp-nunjucks-md', 'Layout not declared in front-matter or data'))
     }
 
     try {
-      compile.renderString(file.contents.toString(), data, (err, result) => {
+      compile.renderString(_fileContent, data, (err, result) => {
         if (err) {
           this.emit('error', new gutil.PluginError('gulp-nunjucks-md', err, {fileName: file.path}))
           return cb()
@@ -104,8 +103,11 @@ module.exports = function (options) {
   })
 }
 
-function isMarkdown (file) {
-  return /\.md|\.markdown/.test(path.extname(file.path))
+function md (text, options) {
+  const render = new marked.Renderer()
+  marked.setOptions(options.marked)
+  render.text = text => unescape(text)
+  return options.escape ? marked(text) : marked(text, {renderer: render})
 }
 
 module.exports.setDefaults = function (options) {

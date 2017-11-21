@@ -19,14 +19,15 @@ This plugin performs following tasks &ndash;
 * Optionally, If file is markdown and have frontmatter, renders markdown.
 * Finally, renders nunjucks to html as usual.
 
-If you want rendering only then prefer [original plugin](https://github.com/carlosl/gulp-nunjucks-render).
+If you don't use markdown then prefer [original plugin](https://github.com/carlosl/gulp-nunjucks-render).
 
 ## Configuration
 
 - To extend a parent layout with frontmatter, your page should have a front-matter with a `layout` pointing to name of a layout (without extension) in your template directory.
-- To set a parent layout for all pages your data should contain a `page.layout` in the root containing name of the layout without extension.
-- By default this plugin warps a `content` block around your page. Your parent layout should have a `content` block where processed content will be inserted. You can turn off this behavior by setting `useBlock: false` either in options or in frontmatter and declaring blocks yourself.
-- In order to render markdown, the page should have frontmatter and `.markdown` or `.md` extension, but be aware that combining markdown with nunjucks can lead to undesired output. You can also pass custom options to marked through `marked` option.
+- To set a parent layout for all pages your data should contain a `page.layout` in the data passed to plugin containing name of the layout without extension.
+- By default this plugin warps a `content` block around your page. Your parent layout should have a `content` block where processed content will be inserted. You can turn off this behavior by setting `useBlock: false` either in options or in frontmatter and declaring blocks normally ( for example multiple block inheritance).
+- In order to render markdown, the page should have frontmatter and `.markdown` or `.md` extension, You can also pass custom options to marked through `marked` option. 
+- Be aware that combining markdown with nunjucks can lead to undesired output. this plugin uses a custom marked renderer to avoid text escaping to make nunjucks work with markdown. set `escape: true` to avoid this if you don't want to combine markdown with nunjucks or want to pass your own renderer to `marked` option.
 - See [wiki](https://github.com/mohitsinghs/gulp-nunjucks-md/wiki) for an example.
 
 ## Usage
@@ -56,6 +57,7 @@ var defaults = {
   useBlock: true,
   block: 'content',
   marked: null,
+  escape: false,
   inheritExtension: false,
   envOptions: {
     watch: false
@@ -67,10 +69,11 @@ var defaults = {
 
 * `path` - Relative path to templates
 * `ext` - Extension for compiled templates, pass null or empty string if yo don't want any extension
-* `data` - Data passed to template, either object or path to the json
+* `data` - Data passed to template, either object or path to the json file
 * `useBlock` - If true appends a content block. If false only parent template will be extended and no default content block will be wrapped. We can also set it at page level by adding `useBlock : false/true` to frontmatter. Please note that page level configuration will be preferred.
 * `block` - Name of content block in your parent template
 * `marked` - Custom options for [marked](http://github.com/chjj/marked)
+* `escape` - false by default to make templates work in markdown. Set it to true if you don't use nunjucks in markdown or want to set a custom markdown renderer.
 * `inheritExtension` - If true, uses same extension that is used for template
 * `envOptions` - These are options provided for nunjucks Environment. More info [here](https://mozilla.github.io/nunjucks/api.html#configure).
 * `manageEnv` - Hook for managing environment before compilation. Useful for adding custom filters, globals, etc.
