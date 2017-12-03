@@ -23,7 +23,7 @@ let defaults = {
   manageEnv: null
 }
 
-module.exports = function (options) {
+module.exports = options => {
   options = _.defaultsDeep(options || {}, defaults)
   nunjucks.configure(options.envOptions)
 
@@ -55,7 +55,7 @@ module.exports = function (options) {
     }
 
     if (file.data) {
-      data = _.merge(file.data, data)
+      data = _.merge({}, file.data, data)
     }
 
     if (file.isStream()) {
@@ -68,7 +68,7 @@ module.exports = function (options) {
     const haveAttributes = !_.isEmpty(frontmatter.attributes)
     let _fileContent = haveAttributes ? frontmatter.body : file.contents.toString()
     // merge front-matter data
-    if (haveAttributes) _.merge(data, { page: frontmatter.attributes })
+    if (haveAttributes) data = _.merge({}, data, { page: frontmatter.attributes })
     // process markdown
     if (isMarkdown) _fileContent = md(_fileContent, options)
 
