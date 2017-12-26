@@ -7,6 +7,7 @@ const through = require('through2')
 const nunjucks = require('nunjucks')
 const frontMatter = require('front-matter')
 const marked = require('marked')
+const preferLocal = require('prefer-local')
 
 let defaults = {
   path: '.',
@@ -73,7 +74,7 @@ module.exports = options => {
     if (isMarkdown) _fileContent = md(_fileContent, options)
 
     if (_.has(data, 'page.layout')) {
-      const _canUseBlock = _.has(data, 'page.useBlock') ? data.page.useBlock : options.useBlock
+      const _canUseBlock = preferLocal(data, 'page.useBlock', options.useBlock)
       const _extendLayout = `{% extends "${data.page.layout}.njk" %}`
       const _extendBlock = `{% block ${options.block} %}${_fileContent}{% endblock %}`
       _fileContent = `${_extendLayout} ${_canUseBlock ? _extendBlock : _fileContent}`
