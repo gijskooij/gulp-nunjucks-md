@@ -34,12 +34,12 @@
     "lodash": "^4.17.2",
     "marked": "^0.3.7",
     "nunjucks": "^3.0.0",
-    "prefer-local": "^1.0.1",
+    "prefer-local": "^1.0.2",
     "through2": "^2.0.3"
   },
   "devDependencies": {
-    "mocha": "^4.0.1",
-    "should": "^13.1.2",
+    "mocha": "^4.1.0",
+    "should": "^13.2.0",
     "standard": "^10.0.3"
   }
 }
