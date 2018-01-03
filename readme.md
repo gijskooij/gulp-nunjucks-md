@@ -63,8 +63,7 @@ var defaults = {
   envOptions: {
     watch: false
   },
-  manageEnv: null,
-  loaders: null
+  manageEnv: null
 }
 ```
 
@@ -74,11 +73,10 @@ var defaults = {
 * `useBlock` - If true appends a content block. If false only parent template will be extended and no default content block will be wrapped. We can also set it at page level by adding `useBlock : false/true` to frontmatter. Please note that page level configuration will be preferred.
 * `block` - Name of content block in your parent template
 * `marked` - Custom options for [marked](http://github.com/chjj/marked)
-* `escape` - false by default to make templates work in markdown. Set it to true if you don't use nunjucks in markdown or want to set a custom markdown renderer.
+* `escape` - `true` by default. Set it to `false` if you want to use nunjucks in markdown.
 * `inheritExtension` - If true, uses same extension that is used for template
 * `envOptions` - These are options provided for nunjucks Environment. More info [here](https://mozilla.github.io/nunjucks/api.html#configure).
 * `manageEnv` - Hook for managing environment before compilation. Useful for adding custom filters, globals, etc.
-* `loaders` - If provided, uses that as first parameter to Environment constructor. Otherwise, uses provided `path`. More info [here](https://mozilla.github.io/nunjucks/api.html#environment)
 
 For more info about nunjucks functionality, check [https://mozilla.github.io/nunjucks/api.html](https://mozilla.github.io/nunjucks/api.html).
 

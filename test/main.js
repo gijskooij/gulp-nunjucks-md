@@ -178,20 +178,13 @@ test.cb('should create a new data context for each template', t => {
 test.cb('should throw an error', t => {
   const stream = nunjucksRender()
   const file = getFile('fixtures/import-error.njk')
-
-  const onerror = function (err) {
+  stream.on('error', (err) => {
     t.truthy(err)
-    this.removeListener('finish', onfinish)
     t.end()
-  }
-
-  const onfinish = function () {
+  })
+  stream.on('finish', () => {
     t.end(new Error("Template has a syntax error which wasn't thrown."))
-  }
-
-  stream.on('error', onerror)
-  stream.on('finish', onfinish)
-
+  })
   stream.write(file)
   stream.end()
 })
@@ -200,19 +193,14 @@ test.cb('error should contain file path', t => {
   const stream = nunjucksRender()
   const file = getFile('fixtures/import-error.njk')
 
-  const onerror = function (err) {
+  stream.on('error', (err) => {
     t.truthy(err)
     t.true(err.hasOwnProperty('fileName'))
-    this.removeListener('finish', onfinish)
     t.end()
-  }
-
-  const onfinish = function () {
+  })
+  stream.on('finish', () => {
     t.end(new Error("Template has a syntax error which wasn't thrown."))
-  }
-
-  stream.on('error', onerror)
-  stream.on('finish', onfinish)
+  })
 
   stream.write(file)
   stream.end()
@@ -340,6 +328,78 @@ test.cb('should render markdown template with front-matter', t => {
   stream.end()
 })
 
+test.cb('should render unescaped markdown when escape is set false', t => {
+  const stream = nunjucksRender({
+    escape: false,
+    path: ['test/fixtures/'],
+    data: {'site': { 'title': 'Example Site' }}
+  })
+
+  const expected = getExpected('fm-markdown-unescaped.html')
+  const file = getFile('fixtures/markdown.md')
+
+  stream.once('data', output => {
+    t.truthy(output)
+    t.truthy(output.contents)
+    t.is(output.contents.toString(), expected)
+    t.end()
+  })
+  stream.write(file)
+  stream.end()
+})
+
+test.cb('should throw error for frontmatter without layout', t => {
+  const stream = nunjucksRender()
+  const file = getFile('fixtures/frontmatter-nolayout.md')
+
+  stream.on('error', err => {
+    t.truthy(err)
+    t.is(err.message, 'Layout not declared in front-matter or data')
+    t.end()
+  })
+  stream.on('finish', () => {
+    t.end(new Error("Frontmatter have no layout but error wasn't thrown."))
+  })
+
+  stream.write(file)
+  stream.end()
+})
+
+test.cb('should throw error when stream is passed', t => {
+  const stream = nunjucksRender()
+  const fakeStream = new Vinyl({
+    contents: require('through2').obj()
+  })
+
+  stream.on('error', err => {
+    t.truthy(err)
+    t.is(err.message, 'Streaming not supported')
+    t.end()
+  })
+  stream.on('finish', () => {
+    t.end(new Error("Stream is passed but error wasn't thrown."))
+  })
+
+  stream.write(fakeStream)
+  stream.end()
+})
+
+test.cb('should return when null is passed', t => {
+  const stream = nunjucksRender()
+  const fakeStream = new Vinyl({
+    contents: null
+  })
+
+  stream.once('data', output => {
+    t.truthy(output)
+    t.is(output.contents, null)
+    t.end()
+  })
+
+  stream.write(fakeStream)
+  stream.end()
+})
+
 test.cb('should use super when useBlock set to false globally', t => {
   const stream = nunjucksRender({
     path: ['test/fixtures/'],
@@ -379,7 +439,7 @@ test.cb('should use super when useBlock set to false locally', t => {
   stream.end()
 })
 
-test.cb('should render template page.layout set in passed data', t => {
+test.cb('should render template when page.layout set in passed data file', t => {
   const stream = nunjucksRender({
     path: ['test/fixtures/'],
     data: 'test/fixtures/data-nolayout.json'

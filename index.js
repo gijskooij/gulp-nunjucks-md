@@ -16,7 +16,7 @@ let defaults = {
   useBlock: true,
   block: 'content',
   marked: null,
-  escape: false,
+  escape: true,
   inheritExtension: false,
   envOptions: {
     watch: false
@@ -25,14 +25,10 @@ let defaults = {
 }
 
 module.exports = options => {
-  options = Object.assign({}, defaults, options || {})
+  options = Object.assign({}, defaults, options)
   nunjucks.configure(options.envOptions)
 
-  if (!options.loaders) {
-    options.loaders = new nunjucks.FileSystemLoader(options.path)
-  }
-
-  const compile = new nunjucks.Environment(options.loaders, options.envOptions)
+  const compile = new nunjucks.Environment(new nunjucks.FileSystemLoader(options.path), options.envOptions)
 
   if (typeof (options.manageEnv) === 'function') {
     options.manageEnv.call(null, compile)
@@ -46,7 +42,7 @@ module.exports = options => {
     let data = {}
     if (typeof options.data === 'object') {
       data = Object.assign({}, options.data)
-    } else if (typeof options.data === 'string') {
+    } else {
       data = JSON.parse(fs.readFileSync(path.resolve(options.data), 'utf8'))
     }
 
@@ -83,24 +79,17 @@ module.exports = options => {
     }
 
     try {
-      compile.renderString(_fileContent, data, (err, result) => {
-        if (err) {
-          this.emit('error', new PluginError('gulp-nunjucks-md', err, {fileName: file.path}))
-          return cb()
-        }
-        file.contents = Buffer.from(result)
-        // Replace extension with mentioned/default extension
-        // only if inherit extension flag is not provided(truthy)
-        if (!options.inheritExtension) {
-          file.extname = options.ext
-        }
-        this.push(file)
-        cb()
-      })
+      file.contents = Buffer.from(compile.renderString(_fileContent, data))
+      // Replace extension with mentioned/default extension
+      // only if inherit extension flag is not provided(truthy)
+      if (!options.inheritExtension) {
+        file.extname = options.ext
+      }
+      this.push(file)
     } catch (err) {
       this.emit('error', new PluginError('gulp-nunjucks-md', err, {fileName: file.path}))
-      cb()
     }
+    cb()
   })
 }
 
@@ -112,7 +101,7 @@ function md (text, options) {
 }
 
 module.exports.setDefaults = function (options) {
-  defaults = Object.assign({}, defaults, options || {})
+  defaults = Object.assign({}, defaults, options)
 }
 
 module.exports.nunjucks = nunjucks
