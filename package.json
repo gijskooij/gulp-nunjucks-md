@@ -1,6 +1,6 @@
 {
   "name": "gulp-nunjucks-md",
-  "version": "1.5.4",
+  "version": "2.0.0",
   "description": "Render Markdown with Nunjucks templates and data",
   "main": "index.js",
   "scripts": {
