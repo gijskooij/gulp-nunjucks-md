@@ -3,7 +3,7 @@
 [![npm](https://badge.fury.io/js/gulp-nunjucks-md.svg)](http://badge.fury.io/js/gulp-nunjucks-md)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![license MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/mohitsinghs/gulp-nunjucks-md/blob/master/LICENSE)
-[![Coverage Status](https://coveralls.io/repos/github/mohitsinghs/gulp-nunjucks-md/badge.svg?branch=master)](https://coveralls.io/github/mohitsinghs/gulp-nunjucks-md?branch=master)
+[![codecov](https://codecov.io/gh/mohitsinghs/gulp-nunjucks-md/branch/master/graph/badge.svg)](https://codecov.io/gh/mohitsinghs/gulp-nunjucks-md)
 > Render nunjucks templates, with markdown and front-matter.
 
 ## Install

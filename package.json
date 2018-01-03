@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "standard --fix",
     "test": "nyc ava -v",
-    "posttest": "nyc report --reporter=text-lcov | coveralls"
+    "posttest": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "ava": "^0.24.0",
-    "coveralls": "^3.0.0",
+    "codecov": "^3.0.0",
     "nyc": "^11.4.1",
     "standard": "^10.0.3",
     "vinyl": "^2.1.0"
