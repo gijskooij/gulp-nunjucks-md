@@ -23,7 +23,7 @@
     "html",
     "javascript"
   ],
-  "author": "Mohit Singh <mohit@mohitsingh.in> (https://mohitsingh.in)",
+  "author": "Mohit Singh <mohit@mohitsingh.in> (https://mohitsingh.in/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mohitsinghs/gulp-nunjucks-md/issues"
