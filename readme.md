@@ -2,7 +2,6 @@
 [![Build Status](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md.svg)](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md)
 [![npm](https://badge.fury.io/js/gulp-nunjucks-md.svg)](http://badge.fury.io/js/gulp-nunjucks-md)
 [![codecov](https://codecov.io/gh/mohitsinghs/gulp-nunjucks-md/branch/master/graph/badge.svg)](https://codecov.io/gh/mohitsinghs/gulp-nunjucks-md)
-[![Dependency Status](https://gemnasium.com/badges/github.com/mohitsinghs/gulp-nunjucks-md.svg)](https://gemnasium.com/github.com/mohitsinghs/gulp-nunjucks-md)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![license MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/mohitsinghs/gulp-nunjucks-md/blob/master/LICENSE)
 > Render nunjucks templates, with markdown and front-matter.
