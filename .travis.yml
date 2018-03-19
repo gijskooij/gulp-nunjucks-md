@@ -4,7 +4,8 @@ node_js:
 - '6'
 - '8'
 before_install:
-- npm i -g npm nyc codecov
+- npm i -g npm
+- npm i -g nyc codecov
 script:
 - nyc npm test
 after_success:
