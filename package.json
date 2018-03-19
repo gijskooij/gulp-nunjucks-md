@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "standard --fix",
-    "test": "nyc ava -v",
-    "posttest": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "test": "ava -v"
   },
   "repository": {
     "type": "git",
@@ -32,17 +31,15 @@
   "dependencies": {
     "front-matter": "^2.3.0",
     "lodash.unescape": "^4.0.1",
-    "marked": "^0.3.16",
-    "nunjucks": "^3.1.0",
+    "marked": "^0.3.17",
+    "nunjucks": "^3.1.2",
     "plugin-error": "^1.0.1",
     "prefer-local": "^1.0.2",
     "through2": "^2.0.3"
   },
   "devDependencies": {
     "ava": "^0.25.0",
-    "codecov": "^3.0.0",
-    "nyc": "^11.5.0",
-    "standard": "^10.0.3",
+    "standard": "^11.0.1",
     "vinyl": "^2.1.0"
   },
   "peerDependencies": {
