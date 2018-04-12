@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md.svg)](https://travis-ci.org/mohitsinghs/gulp-nunjucks-md)
 [![npm](https://badge.fury.io/js/gulp-nunjucks-md.svg)](http://badge.fury.io/js/gulp-nunjucks-md)
 [![codecov](https://codecov.io/gh/mohitsinghs/gulp-nunjucks-md/branch/master/graph/badge.svg)](https://codecov.io/gh/mohitsinghs/gulp-nunjucks-md)
+[![dependencies Status](https://david-dm.org/mohitsinghs/gulp-nunjucks-md/status.svg)](https://david-dm.org/mohitsinghs/gulp-nunjucks-md)
+[![devDependencies Status](https://david-dm.org/mohitsinghs/gulp-nunjucks-md/dev-status.svg)](https://david-dm.org/mohitsinghs/gulp-nunjucks-md?type=dev)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![license MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/mohitsinghs/gulp-nunjucks-md/blob/master/LICENSE)
 > Render nunjucks templates, with markdown and front-matter.
@@ -27,7 +29,7 @@ This plugin renders nunjucks to html and performs following tasks additionally &
 - To extend a parent layout with frontmatter, your page should have a front-matter with a `layout` pointing to name of a layout (without extension) in your template directory.
 - To set a parent layout for all pages, data passed to plugin should contain a `page.layout` with points to name of the layout without extension.
 - By default this plugin warps a `content` block around your page. Your parent layout should have a `content` block where processed content will be inserted. You can turn off this behavior by setting `useBlock: false` either in options or in front-matter and declaring blocks normally ( for example, multiple block inheritance).
-- In order to render markdown, the page should have frontmatter ( or a global `page.layout` in the data passed ) and `.markdown` or `.md` extension, You can also pass custom options to marked through `marked` option. 
+- In order to render markdown, the page should have frontmatter ( or a global `page.layout` in the data passed ) and `.markdown` or `.md` extension, You can also pass custom options to marked through `marked` option.
 - Be aware that combining markdown with nunjucks can lead to undesired output. By setting `escape: false` you can unescape markdown before processing nunjucks to make nunjucks tags work.
 - See [wiki](https://github.com/mohitsinghs/gulp-nunjucks-md/wiki) for an example.
 
@@ -82,5 +84,5 @@ For more info about nunjucks functionality, check [https://mozilla.github.io/nun
 
 ## Shout-outs
 
-[Carlos G. Limardo](http://limardo.org) and [Kristijan Husak](http://kristijanhusak.com) for [gulp-nunjucks-render](https://npm.im/gulp-nunjucks-render) from which this plugin is derived.  
+[Carlos G. Limardo](http://limardo.org) and [Kristijan Husak](http://kristijanhusak.com) for [gulp-nunjucks-render](https://npm.im/gulp-nunjucks-render) from which this plugin is derived.
 [Sindre Sorhus](http://sindresorhus.com/) for [gulp-nunjucks](https://npm.im/gulp-nunjucks)
