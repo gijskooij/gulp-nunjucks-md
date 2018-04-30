@@ -12,6 +12,7 @@ const preferLocal = require('prefer-local')
 let defaults = {
   path: '.',
   ext: '.html',
+  extLayout: '.njk',
   data: {},
   useBlock: true,
   block: 'content',
@@ -71,7 +72,7 @@ module.exports = options => {
 
     if (preferLocal(data, 'page.layout')) {
       const _canUseBlock = preferLocal(data, 'page.useBlock', options.useBlock)
-      const _extendLayout = `{% extends "${data.page.layout}.njk" %}`
+      const _extendLayout = `{% extends "${data.page.layout}${options.extLayout}" %}`
       const _extendBlock = `{% block ${options.block} %}${_fileContent}{% endblock %}`
       _fileContent = `${_extendLayout} ${_canUseBlock ? _extendBlock : _fileContent}`
     } else if (haveAttributes) {
