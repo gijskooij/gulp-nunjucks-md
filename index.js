@@ -11,7 +11,7 @@ const preferLocal = require('prefer-local')
 
 let defaults = {
   path: '.',
-  ext: '.html',
+  ext: '.njk',
   data: {},
   useBlock: true,
   block: 'content',
